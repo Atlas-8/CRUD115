@@ -26,6 +26,6 @@ public class UpdationServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/CRUD_war/");
+        resp.sendRedirect("/CRUD_war/admin");
     }
 }

@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +13,9 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "role")
+    private String role;
 
     @Column(name = "age")
     private Long age;

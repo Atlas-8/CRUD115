@@ -4,14 +4,13 @@ import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserHibernateDAO implements UserDAO {
 
 
-    private Session session;
+    private final Session session;
 
     public UserHibernateDAO(Session session) {
         this.session = session;
@@ -22,7 +21,7 @@ public class UserHibernateDAO implements UserDAO {
         Transaction transaction = session.beginTransaction();
         List<User> users = session.createQuery("FROM User").list();
         transaction.commit();
-        session.close();
+        session.clear();
         return users;
     }
 
@@ -60,7 +59,7 @@ public class UserHibernateDAO implements UserDAO {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        session.close();
+        session.clear();
     }
 
     @Override

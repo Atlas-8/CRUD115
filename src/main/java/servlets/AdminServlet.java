@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/")
-public class MainServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/admin")
+public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,7 +20,7 @@ public class MainServlet extends HttpServlet {
         List<User> users = userService.getAllUsers();
         resp.setContentType("text/html");
         req.setAttribute("users", users);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/homePage.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/adminPage.jsp");
         dispatcher.forward(req, resp);
     }
 }

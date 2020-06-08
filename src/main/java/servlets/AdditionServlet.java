@@ -30,6 +30,6 @@ public class AdditionServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        resp.sendRedirect("/CRUD_war/");
+        resp.sendRedirect("/CRUD_war/admin");
     }
 }

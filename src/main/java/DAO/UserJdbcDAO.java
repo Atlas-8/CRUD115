@@ -24,12 +24,6 @@ public class UserJdbcDAO implements UserDAO {
         return id;
     }
 
-    public void deleteUser(String name) throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("DELETE FROM users WHERE name='" + name + "'");
-        stmt.close();
-    }
-
     @Override
     public List<User> getAllUsers() throws SQLException {
         Statement stmt = connection.createStatement();

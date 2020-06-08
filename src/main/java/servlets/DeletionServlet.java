@@ -21,6 +21,6 @@ public class DeletionServlet extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        resp.sendRedirect("/CRUD_war/");
+        resp.sendRedirect("/CRUD_war/admin");
     }
 }
