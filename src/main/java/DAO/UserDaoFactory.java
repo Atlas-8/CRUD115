@@ -17,8 +17,10 @@ public class UserDaoFactory {
         String jpa = property.getProperty("daotype");
         if (jpa.equalsIgnoreCase("UserJdbcDAO")){
             return new UserJdbcDAO(DBHelper.getConnection());
-        }else{
+        }else if (jpa.equalsIgnoreCase("UserHibernateDAO")){
             return new UserHibernateDAO(getSessionFactory().openSession());
+        } else {
+            throw new IOException("Data base not recognised");
         }
     }
 
