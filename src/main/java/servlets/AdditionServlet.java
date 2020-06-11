@@ -1,7 +1,7 @@
 package servlets;
 
 import model.User;
-import service.UserService;
+import service.Service;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,22 +14,23 @@ public class AdditionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserService userService = UserService.getInstance();
+        Service service = Service.getInstance();
         String name = req.getParameter("name");
+        String role = req.getParameter("role");
         long age  = 0;
         try {
             age = Long.parseLong(req.getParameter("age"));
         } catch (NumberFormatException e) {
             age = 0;
         }
-        User user = new User(name, age);
+        User user = new User(name, age, role);
         if (age > 0) {
             try {
-                userService.addUser(user);
+                service.addUser(user);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        resp.sendRedirect("/CRUD_war/admin");
+        resp.sendRedirect("/admin");
     }
 }

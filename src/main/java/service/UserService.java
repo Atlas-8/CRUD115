@@ -2,23 +2,16 @@ package service;
 
 import DAO.UserDAO;
 import DAO.UserDaoFactory;
-import DAO.UserHibernateDAO;
-import DAO.UserJdbcDAO;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.DBHelper;
-
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
 
-import static DAO.UserDaoFactory.*;
-
-public class UserService {
+public class UserService implements Service{
 
     private static UserService userService;
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     private UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -31,11 +24,11 @@ public class UserService {
         return userService;
     }
 
-    public User getUserById(long id) throws Exception {
+    public User getUserById(long id) throws SQLException {
         try {
             return userDAO.getUserById(id);
         } catch (SQLException e) {
-            throw new Exception(e);
+            throw new SQLException("getting user exception");
         }
     }
 
@@ -64,6 +57,10 @@ public class UserService {
         userDAO.addUser(user);
     }
 
+    public void updateUser(User user) throws SQLException{
+        userDAO.updateUser(user);
+    }
+
     public void cleanUp() throws Exception {
         try {
             userDAO.dropTable();
@@ -79,6 +76,4 @@ public class UserService {
             throw new Exception(e);
         }
     }
-
-
 }

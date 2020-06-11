@@ -1,7 +1,10 @@
 package servlets;
 
 import model.User;
-import service.UserService;
+import service.Service;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,19 +16,27 @@ import java.sql.SQLException;
 public class UpdationServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        UserService userService = UserService.getInstance();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        Service service = Service.getInstance();
         long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         long age = Long.parseLong(req.getParameter("age"));
-        User user = new User(id, name, age);
+        String role;
         try {
-            userService.deleteUserById(id);
-            userService.addUser(user);
+            if (req.getParameter("role") != null) {
+                role = req.getParameter("role");
+            } else {
+                role = service.getUserById(id).getRole();
+            }
+        } catch (SQLException e) {
+            role = "user";
+        }
+        User user = new User(id, name, age, role);
+        try {
+            service.updateUser(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/CRUD_war/admin");
+        resp.sendRedirect("/admin");
     }
 }

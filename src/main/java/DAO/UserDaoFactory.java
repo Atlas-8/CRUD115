@@ -4,6 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import util.DBHelper;
+import util.PropertyReader;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -12,12 +14,11 @@ public class UserDaoFactory {
     private static SessionFactory sessionFactory;
 
     public static UserDAO getUserDAO() throws IOException {
-        Properties property = new Properties();
-        property.load(UserDaoFactory.class.getClassLoader().getResourceAsStream("config.properties"));
+        Properties property = PropertyReader.read();
         String jpa = property.getProperty("daotype");
-        if (jpa.equalsIgnoreCase("UserJdbcDAO")){
+        if (jpa.equals("UserJdbcDAO")){
             return new UserJdbcDAO(DBHelper.getConnection());
-        }else if (jpa.equalsIgnoreCase("UserHibernateDAO")){
+        }else if (jpa.equals("UserHibernateDAO")){
             return new UserHibernateDAO(getSessionFactory().openSession());
         } else {
             throw new IOException("Data base not recognised");

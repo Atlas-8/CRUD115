@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -29,10 +30,17 @@ public class User {
         this.age = age;
     }
 
-    public User(long id, String name, Long age) {
+    public User(String name, Long age, String role) {
+        this.name = name;
+        this.age = age;
+        this.role = role;
+    }
+
+    public User(long id, String name, Long age, String role) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.role = role;
     }
 
     public long getId() {
@@ -51,6 +59,14 @@ public class User {
         this.name = name;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Long getAge() {
         return age;
     }
@@ -59,4 +75,17 @@ public class User {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) &&
+                Objects.equals(age, user.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
 }

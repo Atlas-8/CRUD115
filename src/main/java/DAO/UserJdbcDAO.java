@@ -32,7 +32,7 @@ public class UserJdbcDAO implements UserDAO {
         List<User> usersList = new ArrayList<>();
         while (result.next()) {
             usersList.add(new User(result.getLong("id"), result.getString("name"),
-                    result.getLong("age")));
+                    result.getLong("age"), result.getString("role")));
         }
         result.close();
         stmt.close();
@@ -48,7 +48,8 @@ public class UserJdbcDAO implements UserDAO {
                 return new User(
                         result.getLong("id"),
                         result.getString("name"),
-                        result.getLong("age"));
+                        result.getLong("age"),
+                        result.getString("role"));
             }
         }
     }
@@ -69,18 +70,32 @@ public class UserJdbcDAO implements UserDAO {
                 return new User(
                         result.getLong("id"),
                         result.getString("name"),
-                        result.getLong("age"));
+                        result.getLong("age"),
+                        result.getString("role"));
             }
         }
     }
 
     @Override
     public void addUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (id, name, age) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO users (id, name, age, role) VALUES (?, ?, ?, ?);";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setLong(1, user.getId());
         statement.setString(2, user.getName());
         statement.setLong(3, user.getAge());
+        statement.setString(4, user.getRole());
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    @Override
+    public void updateUser(User user) throws SQLException{
+        String sql = "UPDATE users SET name = ? , age = ?, role = ? WHERE id = ?;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, user.getName());
+        statement.setLong(2, user.getAge());
+        statement.setString(3, user.getRole());
+        statement.setLong(4, user.getId());
         statement.executeUpdate();
         statement.close();
     }
@@ -89,7 +104,7 @@ public class UserJdbcDAO implements UserDAO {
     public void createTable() throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT, " +
-                "name VARCHAR(256), age BIGINT, PRIMARY KEY (id))");
+                "name VARCHAR(256), age BIGINT, role VARCHAR(8), PRIMARY KEY (id))");
         stmt.close();
     }
 

@@ -7,8 +7,10 @@
 
 Добро пожаловать, аноним
 <br/><br/>
-<form action="/CRUD_war/admin" method="get">
-    <input type="text" name="name" value="${param.name}" placeholder="оставьте это поле пустым"<%--${param.name}--%>>
+
+<form action="/validate" method="get">
+    <input type="text" name="name" placeholder="вводим логин">
+    <input type="text" name="age" placeholder="укажите возраст">
     <input type="submit" value="Войти">
 </form>
 

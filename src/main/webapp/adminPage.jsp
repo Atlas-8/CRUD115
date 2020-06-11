@@ -18,6 +18,7 @@
         <td>ID</td>
         <td>Имя</td>
         <td>Возраст</td>
+        <td>Статус</td>
         <td>Действия</td>
     </tr>
     <c:forEach items="${users}" var = "user">
@@ -25,20 +26,25 @@
             <td>${user.getId()}</td>
             <td>${user.getName()}</td>
             <td>${user.getAge()}</td>
+            <td>${user.getRole()}</td>
             <td>
-                <form action = "/CRUD_war/updation.jsp" method="post">
+                <form action = "/updation.jsp" method="post">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="hidden" name="name" value="${user.getName()}">
                     <input type="hidden" name="age" value="${user.getAge()}">
+                    <input type="hidden" name="role" value="${user.getRole()}">
                     <input type="submit" value="Изменить" style="float:left">
                 </form>
-                <form action="/CRUD_war/deleteUser" method="get">
+                <form action="/deleteUser" method="get">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="submit" value="Удалить" style="float:left">
                 </form></td>
         </tr>
     </c:forEach>
 </table>
+
+<br/>
+<p><a href="http://localhost:8080/">Вернуться на страницу авторизации</a></p>
 
 </body>
 </html>
